@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eou pipefail
+
+zig build
+./zig-out/bin/advent_of_code_2025
