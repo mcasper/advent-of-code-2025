@@ -3,16 +3,21 @@
 set -eou pipefail
 
 day=${1:-}
+part=${2:-}
 
 if [ -z "${day}" ]; then
   echo "One required argument: [day]"
   exit 1
 fi
 
-if [ -f src/day${day}_part1.zig ]; then
-  zig run src/day${day}_part1.zig
+if [ -z "${part}" ] || [ "${part}" == "1" ]; then
+  if [ -f src/day${day}_part1.zig ]; then
+    zig run src/day${day}_part1.zig
+  fi
 fi
 
-if [ -f src/day${day}_part2.zig ]; then
-  zig run src/day${day}_part2.zig
+if [ -z "${part}" ] || [ "${part}" == "2" ]; then
+  if [ -f src/day${day}_part2.zig ]; then
+    zig run src/day${day}_part2.zig
+  fi
 fi

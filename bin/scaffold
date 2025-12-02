@@ -32,6 +32,7 @@ pub fn main() !void {
     if (sample_answer != expected_sample_answer) {
         return std.debug.print("Day ${day} Part 1 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
     }
+    std.debug.print("Day ${day} Part 1 sample passed!\n", .{});
 
     const input_buffer = try utils.readFilePath(allocator, "data/day${day}/input.txt");
     defer allocator.free(input_buffer);
@@ -60,6 +61,7 @@ pub fn main() !void {
     if (sample_answer != expected_sample_answer) {
         return std.debug.print("Day ${day} Part 2 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
     }
+    std.debug.print("Day ${day} Part 2 sample passed!\n", .{});
 
     const input_buffer = try utils.readFilePath(allocator, "data/day${day}/input.txt");
     defer allocator.free(input_buffer);

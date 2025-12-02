@@ -15,6 +15,7 @@ pub fn main() !void {
     if (sample_answer != expected_sample_answer) {
         return std.debug.print("Day 2 Part 1 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
     }
+    std.debug.print("Day 2 Part 1 sample passed!\n", .{});
 
     const input_buffer = try utils.readFilePath(allocator, "data/day2/input.txt");
     defer allocator.free(input_buffer);
