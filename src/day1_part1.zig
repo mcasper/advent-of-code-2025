@@ -1,18 +1,26 @@
 const std = @import("std");
+const utils = @import("utils.zig");
 
 pub fn main() !void {
-    const answer = try solve();
-    std.debug.print("Day 1 Part 1 answer: {d}\n", .{answer});
-}
-
-fn solve() !u64 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    const input_buffer = try readFilePath(allocator, "data/day1/input.txt");
-    defer allocator.free(input_buffer);
+    const sample_buffer = try utils.readFilePath(allocator, "data/day1/sample1.txt");
+    defer allocator.free(sample_buffer);
+    const sample_answer = try solve(allocator, sample_buffer);
+    const expected_sample_answer = 3;
+    if (sample_answer != expected_sample_answer) {
+        return std.debug.print("Day 1 Part 1 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
+    }
 
+    const input_buffer = try utils.readFilePath(allocator, "data/day1/input.txt");
+    defer allocator.free(input_buffer);
+    const answer = try solve(allocator, input_buffer);
+    std.debug.print("Day 1 Part 1 answer: {d}\n", .{answer});
+}
+
+fn solve(_: std.mem.Allocator, input_buffer: []u8) !u64 {
     var current_position: i64 = 50;
     var num_times_zero: u64 = 0;
 
@@ -46,22 +54,4 @@ fn solve() !u64 {
     }
 
     return num_times_zero;
-}
-
-fn getcwd() ![std.fs.max_path_bytes]u8 {
-    var buf: [std.fs.max_path_bytes]u8 = undefined;
-    _ = try std.posix.getcwd(&buf);
-    return buf;
-}
-
-fn readFilePath(allocator: std.mem.Allocator, file_path: []const u8) ![]u8 {
-    const file = try std.fs.cwd().openFile(file_path, .{});
-    defer file.close();
-
-    const stat = try file.stat();
-    const file_size = stat.size;
-
-    const contents_buffer = try allocator.alloc(u8, file_size);
-    _ = try file.readAll(contents_buffer);
-    return contents_buffer;
 }

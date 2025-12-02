@@ -9,10 +9,10 @@ if [ -z "${day}" ]; then
   exit 1
 fi
 
-if [ -f src/day${day}/part1.zig ]; then
-  zig run src/day${day}/part1.zig
+if [ -f src/day${day}_part1.zig ]; then
+  zig run src/day${day}_part1.zig
 fi
 
-if [ -f src/day${day}/part2.zig ]; then
-  zig run src/day${day}/part2.zig
+if [ -f src/day${day}_part2.zig ]; then
+  zig run src/day${day}_part2.zig
 fi

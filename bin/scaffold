@@ -9,37 +9,66 @@ if [ -z "${day}" ]; then
   exit 1
 fi
 
-mkdir -p src/day${day}
-touch src/day${day}/part1.zig
-touch src/day${day}/part2.zig
+touch src/day${day}_part1.zig
+touch src/day${day}_part2.zig
 
 mkdir -p data/day${day}
 echo "Replace me!" > data/day${day}/input.txt
 echo "Replace me!" > data/day${day}/sample1.txt
 echo "Replace me!" > data/day${day}/sample1_answer.txt
 
-cat <<EOF > src/day${day}/part1.zig
+cat <<EOF > src/day${day}_part1.zig
 const std = @import("std");
+const utils = @import("utils.zig");
 
 pub fn main() !void {
-    const answer = try solve();
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
+    const sample_buffer = try utils.readFilePath(allocator, "data/day${day}/sample1.txt");
+    defer allocator.free(sample_buffer);
+    const sample_answer = try solve(allocator, sample_buffer);
+    const expected_sample_answer = undefined; // DEFINE ME
+    if (sample_answer != expected_sample_answer) {
+        return std.debug.print("Day ${day} Part 1 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
+    }
+
+    const input_buffer = try utils.readFilePath(allocator, "data/day${day}/input.txt");
+    defer allocator.free(input_buffer);
+    const answer = try solve(allocator, input_buffer);
     std.debug.print("Day ${day} Part 1 answer: {d}\n", .{answer});
 }
 
-fn solve() !u64 {
+fn solve(_: std.mem.Allocator, _: []u8) !u64 {
   return 0;
 }
 EOF
 
-cat <<EOF > src/day${day}/part2.zig
+cat <<EOF > src/day${day}_part2.zig
 const std = @import("std");
+const utils = @import("utils.zig");
 
 pub fn main() !void {
-    const answer = try solve();
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
+    const sample_buffer = try utils.readFilePath(allocator, "data/day${day}/sample1.txt");
+    defer allocator.free(sample_buffer);
+    const sample_answer = try solve(allocator, sample_buffer);
+    const expected_sample_answer = undefined; // DEFINE ME
+    if (sample_answer != expected_sample_answer) {
+        return std.debug.print("Day ${day} Part 2 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
+    }
+
+    const input_buffer = try utils.readFilePath(allocator, "data/day${day}/input.txt");
+    defer allocator.free(input_buffer);
+    const answer = try solve(allocator, input_buffer);
     std.debug.print("Day ${day} Part 2 answer: {d}\n", .{answer});
 }
 
-fn solve() !u64 {
+fn solve(_: std.mem.Allocator, _: []u8) !u64 {
   return 0;
 }
 EOF

@@ -1,18 +1,26 @@
 const std = @import("std");
+const utils = @import("utils.zig");
 
 pub fn main() !void {
-    const answer = try solve();
-    std.debug.print("Day 1 Part 2 answer: {d}\n", .{answer});
-}
-
-fn solve() !u64 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    const input_buffer = try readFilePath(allocator, "data/day1/input.txt");
-    defer allocator.free(input_buffer);
+    const sample_buffer = try utils.readFilePath(allocator, "data/day1/sample1.txt");
+    defer allocator.free(sample_buffer);
+    const sample_answer = try solve(allocator, sample_buffer);
+    const expected_sample_answer = 3;
+    if (sample_answer != expected_sample_answer) {
+        return std.debug.print("Day 1 Part 2 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
+    }
 
+    const input_buffer = try utils.readFilePath(allocator, "data/day1/input.txt");
+    defer allocator.free(input_buffer);
+    const answer = try solve(allocator, input_buffer);
+    std.debug.print("Day 1 Part 2 answer: {d}\n", .{answer});
+}
+
+fn solve(_: std.mem.Allocator, input_buffer: []u8) !u64 {
     var current_position: i64 = 50;
     var num_times_zero: u64 = 0;
 
