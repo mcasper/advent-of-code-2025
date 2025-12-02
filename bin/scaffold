@@ -15,7 +15,6 @@ touch src/day${day}_part2.zig
 mkdir -p data/day${day}
 echo "Replace me!" > data/day${day}/input.txt
 echo "Replace me!" > data/day${day}/sample1.txt
-echo "Replace me!" > data/day${day}/sample1_answer.txt
 
 cat <<EOF > src/day${day}_part1.zig
 const std = @import("std");
@@ -29,7 +28,7 @@ pub fn main() !void {
     const sample_buffer = try utils.readFilePath(allocator, "data/day${day}/sample1.txt");
     defer allocator.free(sample_buffer);
     const sample_answer = try solve(allocator, sample_buffer);
-    const expected_sample_answer = undefined; // DEFINE ME
+    const expected_sample_answer = 9999999999; // DEFINE ME
     if (sample_answer != expected_sample_answer) {
         return std.debug.print("Day ${day} Part 1 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
     }
@@ -57,7 +56,7 @@ pub fn main() !void {
     const sample_buffer = try utils.readFilePath(allocator, "data/day${day}/sample1.txt");
     defer allocator.free(sample_buffer);
     const sample_answer = try solve(allocator, sample_buffer);
-    const expected_sample_answer = undefined; // DEFINE ME
+    const expected_sample_answer = 9999999999; // DEFINE ME
     if (sample_answer != expected_sample_answer) {
         return std.debug.print("Day ${day} Part 2 expected sample answer: {d}, got: {d}\n", .{ expected_sample_answer, sample_answer });
     }
