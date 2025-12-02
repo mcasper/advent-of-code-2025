@@ -2,5 +2,17 @@
 
 set -eou pipefail
 
-zig build
-./zig-out/bin/advent_of_code_2025
+day=${1:-}
+
+if [ -z "${day}" ]; then
+  echo "One required argument: [day]"
+  exit 1
+fi
+
+if [ -f src/day${day}/part1.zig ]; then
+  zig run src/day${day}/part1.zig
+fi
+
+if [ -f src/day${day}/part2.zig ]; then
+  zig run src/day${day}/part2.zig
+fi
