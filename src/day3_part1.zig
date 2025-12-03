@@ -29,7 +29,6 @@ fn solve(_: std.mem.Allocator, input_buffer: []u8) !u64 {
             continue;
         }
         const line_max_joltage = try max_joltage(line);
-        std.debug.print("Line max joltage: {d}\n", .{line_max_joltage});
         total_joltage += line_max_joltage;
     }
 
@@ -48,10 +47,16 @@ fn max_joltage(line: []const u8) !u64 {
         if (i < line.len - 1) {
             if (integer_value == biggest_first_number and integer_value > biggest_second_number) {
                 biggest_second_number = integer_value;
+                continue;
             } else if (integer_value > biggest_first_number) {
                 biggest_first_number = integer_value;
                 biggest_second_number = 0;
+                continue;
             }
+        }
+
+        if (i > 0 and integer_value > biggest_second_number) {
+            biggest_second_number = integer_value;
         }
     }
 
